@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.Dao.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.test.model.UserInfo" >
+    <id column="position_int" property="positionInt" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="passwd" property="passwd" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    position_int, name, passwd
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_info
+    where position_int = #{positionInt,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_info
+    where position_int = #{positionInt,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.test.model.UserInfo" >
+    insert into user_info (position_int, name, passwd
+      )
+    values (#{positionInt,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{passwd,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.test.model.UserInfo" >
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="positionInt != null" >
+        position_int,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="passwd != null" >
+        passwd,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="positionInt != null" >
+        #{positionInt,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        #{passwd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test.model.UserInfo" >
+    update user_info
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="passwd != null" >
+        passwd = #{passwd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where position_int = #{positionInt,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test.model.UserInfo" >
+    update user_info
+    set name = #{name,jdbcType=VARCHAR},
+      passwd = #{passwd,jdbcType=VARCHAR}
+    where position_int = #{positionInt,jdbcType=BIGINT}
+  </update>
+</mapper>

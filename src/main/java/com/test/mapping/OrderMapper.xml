@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.test.Dao.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.test.model.Order" >
+    <id column="position_int" property="positionInt" jdbcType="BIGINT" />
+    <result column="kj_customer_acco" property="kjCustomerAcco" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="INTEGER" />
+    <result column="update_time" property="updateTime" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    position_int, kj_customer_acco, update_date, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where position_int = #{positionInt,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order
+    where position_int = #{positionInt,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.test.model.Order" >
+    insert into order (position_int, kj_customer_acco, update_date, 
+      update_time)
+    values (#{positionInt,jdbcType=BIGINT}, #{kjCustomerAcco,jdbcType=VARCHAR}, #{updateDate,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.test.model.Order" >
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="positionInt != null" >
+        position_int,
+      </if>
+      <if test="kjCustomerAcco != null" >
+        kj_customer_acco,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="positionInt != null" >
+        #{positionInt,jdbcType=BIGINT},
+      </if>
+      <if test="kjCustomerAcco != null" >
+        #{kjCustomerAcco,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.test.model.Order" >
+    update order
+    <set >
+      <if test="kjCustomerAcco != null" >
+        kj_customer_acco = #{kjCustomerAcco,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where position_int = #{positionInt,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.test.model.Order" >
+    update order
+    set kj_customer_acco = #{kjCustomerAcco,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=INTEGER}
+    where position_int = #{positionInt,jdbcType=BIGINT}
+  </update>
+</mapper>
